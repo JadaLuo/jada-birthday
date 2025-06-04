@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我眼中的坤崽-送给永远18岁的坤崽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #000;
+            background: url('pic/bg-wishes.jpg') no-repeat center/cover;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+            touch-action: none;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 0;
+        }
+        
+        .nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            position: relative;
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 50%;
+            width: 0; height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+        .nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        .wishes-container {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 60px);
+            overflow: hidden;
+        }
+        
+        .wish-item {
+            position: absolute;
+            background: rgba(30,30,30,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 80%;
+            min-width: 250px;
+            backdrop-filter: blur(3px);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            will-change: transform, opacity;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .wish-item.active {
+            transform: scale(1);
+            opacity: 1;
+            z-index: 100;
+        }
+        
+        .wish-item.fading {
+            transform: scale(0.5) !important;
+            opacity: 0 !important;
+        }
+        
+        .wish-content {
+            color: #ddd;
+            line-height: 1.6;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        /* 不同祝福的样式变化 */
+        .wish-item.type1 {
+            border-top: 4px solid #ff6666;
+        }
+        
+        .wish-item.type2 {
+            border-top: 4px solid #66ccff;
+        }
+        
+        .wish-item.type3 {
+            border-top: 4px solid #99ff99;
+        }
+        
+        .wish-item.type4 {
+            border-top: 4px solid #ffcc00;
+        }
+        
+        .wish-item.type5 {
+            border-top: 4px solid #cc99ff;
+        }
+        
+        .wish-item.type6 {
+            border-top: 4px solid #ff9966;
+        }
+        
+        .wish-item.type7 {
+            border-top: 4px solid #66ffcc;
+        }
+        
+        .wish-item.type8 {
+            border-top: 4px solid #ff66cc;
+        }
+        
+        /* 页面切换效果 */
+        .page {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 60px);
+            background: #111;
+            display: none;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @media (max-width: 480px) {
+            .nav a {
+                margin: 0 10px;
+                font-size: 0.9rem;
+                padding: 5px 8px;
+            }
+            
+            .wish-item {
+                min-width: 200px;
+                padding: 15px;
+            }
+            
+            .wish-content {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">主页</a>
+        <a href="about.html">关于我们</a>
+        <a href="wishes.html">我眼中的坤崽</a>
+        <a href="memories.html">想对你说</a>
+    </nav>
+    
+    <div class="wishes-container" id="wishesContainer"></div>
+        
+    <audio id="bgm" loop>
+        <source src="pic/birthday-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 音乐控制
+        const bgm = document.getElementById('bgm');
+        const musicPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const musicTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+        
+        // 恢复音乐状态
+        if (musicPlaying) {
+            bgm.currentTime = musicTime;
+            bgm.play().catch(e => console.log('自动播放被阻止'));
+        }
+        
+        // 祝福内容（只保留祝福语）
+        const wishes = [
+            "坤崽生日快乐！愿你天天开心，心想事成！",
+            "生日快乐！我们的友谊长存！",
+            "祝坤崽新的一岁万事如意！",
+            "生日快乐，永远18岁！",
+            "坚定勇敢",
+            "一往无前，奋力追梦，",
+            "Piu~亮有内涵",
+            "目标感强，认定的事情就努力去做",
+            "情感细腻的引导型朋友",
+            "精打细算的理财小能手",
+            "“平平无奇”的护肤达人",
+            "难不倒的送礼奇才",
+            "风格百变的时尚达人",
+            "日系",
+            "文艺小青年",
+            "朋友超多超多",
+            "英语超好",
+            "认真还负责",
+            "Taylor Swift的忠实粉丝",
+            "知道很多小众乐队、品牌的特立独行人儿~ ",
+            "新晋产品运营人",
+            "手工做的也超级棒！",
+            "熬夜狂魔，月亮不睡你不睡",
+            "沪上小川厨",
+            "跟着导师库库努力的策展人",
+            "可怜打工仔，平价实习生"
+        ];
+        
+        const container = document.getElementById('wishesContainer');
+        const activeWishes = [];
+        const maxActiveWishes = 15; // 最多同时显示的祝福数量
+        
+        // 创建祝福元素
+        function createWish() {
+            if (activeWishes.length >= maxActiveWishes) {
+                // 如果已达到最大数量，移除最早的祝福
+                const oldestWish = activeWishes.shift();
+                oldestWish.element.classList.add('fading');
+                setTimeout(() => {
+                    oldestWish.element.remove();
+                }, 500);
+            }
+            
+            const wishElement = document.createElement('div');
+            const type = Math.floor(Math.random() * 8) + 1;
+            wishElement.className = `wish-item type${type}`;
+            
+            // 随机选择一条祝福
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            wishElement.innerHTML = `
+                <div class="wish-content">${randomWish}</div>
+            `;
+            
+            // 随机位置（确保不会完全重叠）
+            let left, top;
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            do {
+                left = Math.random() * (window.innerWidth - 300);
+                top = 60 + Math.random() * (window.innerHeight - 200);
+                attempts++;
+                
+                if (attempts >= maxAttempts) break;
+            } while (isOverlapping(left, top, activeWishes));
+            
+            wishElement.style.left = `${left}px`;
+            wishElement.style.top = `${top}px`;
+            
+            container.appendChild(wishElement);
+            
+            // 点击关闭祝福
+            wishElement.addEventListener('click', function() {
+                this.classList.add('fading');
+                const index = activeWishes.findIndex(w => w.element === this);
+                if (index !== -1) {
+                    activeWishes.splice(index, 1);
+                }
+                setTimeout(() => {
+                    this.remove();
+                }, 500);
+            });
+            
+            // 显示祝福
+            setTimeout(() => {
+                wishElement.classList.add('active');
+            }, 10);
+            
+            // 添加到活动祝福列表
+            activeWishes.push({
+                element: wishElement,
+                left: left,
+                top: top,
+                width: 250,
+                height: 120
+            });
+        }
+        
+        // 检查新祝福是否会与现有祝福重叠
+        function isOverlapping(left, top, existingWishes) {
+            const newWidth = 250;
+            const newHeight = 120;
+            const padding = 20; // 最小间距
+            
+            for (const wish of existingWishes) {
+                if (
+                    left < wish.left + wish.width + padding &&
+                    left + newWidth + padding > wish.left &&
+                    top < wish.top + wish.height + padding &&
+                    top + newHeight + padding > wish.top
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        // 初始创建一批祝福
+        function initWishes() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(createWish, i * 800);
+            }
+        }
+        
+        // 持续创建新祝福
+        function startWishFlow() {
+            createWish();
+            const nextDelay = 1000 + Math.random() * 2000;
+            setTimeout(startWishFlow, nextDelay);
+        }
+        
+        // 页面切换功能
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                
+                // 更新导航栏活动状态
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // 隐藏所有页面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // 显示当前页面
+                if (pageId === 'wishes') {
+                    container.style.display = 'block';
+                    document.getElementById(pageId).style.display = 'none';
+                } else {
+                    container.style.display = 'none';
+                    document.getElementById(pageId).classList.add('active');
+                }
+            });
+        });
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', () => {
+            initWishes();
+            setTimeout(startWishFlow, 3000);
+        });
+        
+        // 离开页面时保存音乐状态
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('musicPlaying', !bgm.paused);
+            localStorage.setItem('musicTime', bgm.currentTime);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>送给永远18岁的坤崽</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: #fff;
+            height: 100vh;
+            background: url('pic/bg-main.jpg') no-repeat center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 0;
+        }
+        .nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            position: relative;
+        }
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 50%;
+            width: 0; height: 2px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+        .nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .main-content {
+            position: relative;
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .lyrics {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+        .music-info {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 25px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .music-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            filter: invert(1);
+        }
+        .social {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .enter-btn {
+            margin-top: 2rem;
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 12px 35px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .enter-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .lyrics { font-size: 1rem; }
+            .music-info { padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">主页</a>
+        <a href="about.html">关于我们</a>
+        <a href="wishes.html">我眼中的坤崽</a>
+        <a href="memories.html">想对你说</a>
+    </nav>
+    
+    <div class="main-content">
+        <h1>送给永远18岁的坤崽</h1>
+        <div class="lyrics">
+            <p>Oh darling' don't you ever grow up</p>
+            <p>Don't you ever grow up' it could stay this simple</p>
+            <p>No one's ever burned you' nothing's ever left you scarred</p>
+        </div>
+        <div class="music-info">
+            <svg class="music-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 14C8 15.1046 8.89543 16 10 16C11.1046 16 12 15.1046 12 14V8C12 6.89543 12.8954 6 14 6C15.1046 6 16 6.89543 16 8V14C16 15.1046 16.8954 16 18 16C19.1046 16 20 15.1046 20 14V8C20 4 16 5 16 5" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span>正在播放《Never row Up》</span>
+        </div>
+            <button class="enter-btn" onclick="location.href='about.html'">探索更多</button>
+    </div>
+    
+    <audio id="bgm" loop>
+        <source src="pic/birthday-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // 音乐控制
+        const bgm = document.getElementById('bgm');
+        const musicPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const musicTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+        
+        // 恢复音乐状态
+        if (musicPlaying) {
+            bgm.currentTime = musicTime;
+            bgm.play().catch(e => console.log('自动播放被阻止'));
+        }
+        
+        // 点击页面任意位置开始播放音乐
+        document.addEventListener('click', function() {
+            if (bgm.paused) {
+                bgm.play();
+                localStorage.setItem('musicPlaying', 'true');
+            }
+        }, { once: true });
+        
+        // 离开页面时保存音乐状态
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('musicPlaying', !bgm.paused);
+            localStorage.setItem('musicTime', bgm.currentTime);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>想对你说-送给永远18岁的坤崽</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            background: url('pic/bg-memories.jpg') no-repeat center/cover;
+            position: relative;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 0;
+        }
+        .nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 15px 40px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 5rem;
+            text-align: center;
+        }
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 120px;
+        }
+        .number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        .label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 0 10px;
+        }
+        .photo {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 8px;
+            position: relative;
+        }
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .photo:hover img {
+            transform: scale(1.1);
+        }
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            padding: 8px;
+            font-size: 0.8rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        .photo:hover .caption {
+            transform: translateY(0);
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6rem; }
+            .stat-item { min-width: 100px; padding: 15px; }
+            .number { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">主页</a>
+        <a href="about.html">关于我们</a>
+        <a href="wishes.html">我眼中的坤崽</a>
+        <a href="memories.html">想对你说</a>
+    </nav>
+    
+    <div class="content">
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="number">5</div>
+                <div class="label">次生日</div>
+            </div>
+            <div class="stat-item">
+                <div class="number">1639</div>
+                <div class="label">天好友</div>
+            </div>
+            <div class="stat-item">
+                <div class="number">1931</div>
+                <div class="label">公里的距离</div>
+            </div>
+            <div class="stat-item">
+                <div class="number">∞</div>
+                <div class="label">无限友谊</div>
+            </div>
+        </div>
+        
+        <h1>想对你说</h1>
+
+        <div class="gallery">
+            <div class="photo">
+                <img src="pic/2021.12.31.jpg" alt="跨年电影">
+                <div class="caption">第一次看了跨年电影 2021.12.31</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2022.4.jpg" alt="玩偶小熊">
+                <div class="caption">还记得带玩偶小熊来串门吗？简单却快乐 2024.04</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2022.5.8.jpg" alt="看展">
+                <div class="caption">第一次去相约看展，接受了一次艺术熏陶，虽然很多我不太看的懂，出片就行啦 2022.5.8</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2022.5.20.jpg" alt="线下重映">
+                <div class="caption">跟着你第一次去体验了线下重映演唱会，很新奇的体验，也见到了有气场很干练的律师姐姐 2022.5.20</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2022.11.jpg" alt="运动会">
+                <div class="caption">合照中一眼捕捉到的帅气小姐姐 2022.11</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2024.1.1.jpg" alt="跨年聚会">
+                <div class="caption">不知道为什么大家都跑到了芳姐家聚餐跨年了，但是还记得那天追张杰的跨年演唱会 2023.12.31.jpg</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2024.4.21.jpg" alt="徒步">
+                <div class="caption">一大群人徒步，还记得你为了美丽，穿的露脐装，可惜山上还是有点冷了 2024.4.21</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2024.5.20.png" alt="难得的合舞">
+                <div class="caption">可惜我们一起留下的照片太少啦，一起合拍跳舞的视频也很少，就用这个照片留住瘦瘦的我和美丽的你吧 2024.5.20</div>
+            </div>
+            <div class="photo">
+                <img src="pic/2025.3.2.jpg" alt="上海重逢">
+                <div class="caption">世界就是个圆圈，感谢发达的现代交通，我们又换了个地方见面啦~ 2025.3.2</div>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="bgm" loop>
+        <source src="pic/birthday-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // 音乐控制
+        const bgm = document.getElementById('bgm');
+        const musicPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const musicTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+        
+        if (musicPlaying) {
+            bgm.currentTime = musicTime;
+            bgm.play().catch(e => console.log('自动播放被阻止'));
+        }
+        
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('musicPlaying', !bgm.paused);
+            localStorage.setItem('musicTime', bgm.currentTime);
+        });
+    </script>
+</body>
+</html>

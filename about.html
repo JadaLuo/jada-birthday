@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>关于我们 - 送给永远18岁的坤崽</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            background: url('pic/bg-about.jpg') no-repeat center/cover;
+            position: relative;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 0;
+        }
+        .nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 80px 20px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.3);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            z-index: 1;
+        }
+        .year {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6rem; }
+            .year { font-size: 1.1rem; }
+            .desc { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html">主页</a>
+        <a href="about.html">关于我们</a>
+        <a href="wishes.html">我眼中的坤崽</a>
+        <a href="memories.html">想对你说</a>
+    </nav>
+    
+    <div class="content">
+        <h1>我们的故事</h1>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="year">2020年</div>
+                <div class="desc">我们第一次相遇，因为工作认识，你说我自己P的证件照很搞笑，让你印象深刻</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2021年</div>
+                <div class="desc">当年我们第一条招乎消息是发给了彼此哦！一次约饭时偶然得知当天居然是你生日，临时抱佛脚拉你去精品店选购小礼品，从此我们就多了一个朋友记得彼此生日啦~</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2022年</div>
+                <div class="desc">大家可怜兮兮“喜提”居家办公，我们也组建了唠嗑小分队，一边唠嗑一边磋磨枯燥的审单时光</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2023年</div>
+                <div class="desc">一起去报课学习跳舞，每天上班都想着相约去上课，勤奋的时候还能中午哼哧哼哧的冲去跳</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2024年</div>
+                <div class="desc">你开始进入焦灼的考研冲刺阶段啦，对工作内容感到枯燥、对生活些许迷茫的我跟着你开始泡图书馆学习中级。你的努力得到了回报，重返校园生活</div>
+            </div>
+            <div class="timeline-item">
+                <div class="year">2025年</div>
+                <div class="desc">你在上海继续自己的学业，积极的组织参加各种活动，寻找新的职位实习，努力的积攒经验。我也开始尝试不一样的工作内容，不再仅仅只有枯燥的审单。相信我们都会有更加丰富多彩的人生体验！</div>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="bgm" loop>
+        <source src="pic/birthday-music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // 音乐控制
+        const bgm = document.getElementById('bgm');
+        const musicPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const musicTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+        
+        if (musicPlaying) {
+            bgm.currentTime = musicTime;
+            bgm.play().catch(e => console.log('自动播放被阻止'));
+        }
+        
+        window.addEventListener('beforeunload', function() {
+            localStorage.setItem('musicPlaying', !bgm.paused);
+            localStorage.setItem('musicTime', bgm.currentTime);
+        });
+    </script>
+</body>
+</html>
